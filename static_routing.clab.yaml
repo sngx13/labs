@@ -1,0 +1,53 @@
+name: b3net-single-topology
+topology:
+  nodes:
+    CE1:
+      kind: cisco_iol
+      image: asifsyd/cisco_iol:17.12.01
+      mgmt-ipv4: 172.20.20.101
+      mgmt-ipv6: 3fff:172:20:20::101
+    CE2:
+      kind: cisco_iol
+      image: asifsyd/cisco_iol:17.12.01
+      mgmt-ipv4: 172.20.20.102
+      mgmt-ipv6: 3fff:172:20:20::102
+    PE1:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:25.4.2
+      restart-policy: always
+      link-apply-mode: live
+      startup-delay: 20
+      mgmt-ipv4: 172.20.20.103
+      mgmt-ipv6: 3fff:172:20:20::103
+    PE2:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:25.4.2
+      restart-policy: always
+      link-apply-mode: live
+      startup-delay: 20
+      mgmt-ipv4: 172.20.20.104
+      mgmt-ipv6: 3fff:172:20:20::104
+    P1:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:25.4.2
+      restart-policy: always
+      link-apply-mode: live
+      startup-delay: 30
+      mgmt-ipv4: 172.20.20.105
+      mgmt-ipv6: 3fff:172:20:20::105
+    RR:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:25.4.2
+      restart-policy: always
+      link-apply-mode: live
+      startup-delay: 30
+      mgmt-ipv4: 172.20.20.106
+      mgmt-ipv6: 3fff:172:20:20::106
+
+  links:
+    - endpoints: ["CE1:eth1", "PE1:Gi0-0-0-1"]
+    - endpoints: ["CE2:eth1", "PE2:Gi0-0-0-1"]
+    - endpoints: ["CE1:eth2", "CE2:eth2"]
+    - endpoints: ["PE1:Gi0-0-0-2", "P1:Gi0-0-0-1"]
+    - endpoints: ["PE2:Gi0-0-0-2", "P1:Gi0-0-0-2"]
+    - endpoints: ["P1:Gi0-0-0-3", "RR:Gi0-0-0-1"]

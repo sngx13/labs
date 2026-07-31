@@ -1,0 +1,9 @@
+.vscode/
+.venv
+.env
+*.json
+__pycache__/
+*.pyc
+
+
+clab-b3net-single-topology/
